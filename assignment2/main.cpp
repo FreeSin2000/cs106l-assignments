@@ -14,7 +14,7 @@
 #include <string>
 #include <unordered_set>
 
-std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
+std::string kYourName = "Ruisen Feng"; // Don't forget to change this!
 
 /**
  * Takes in a file name and returns a set containing all of the applicant names as a set.
@@ -28,7 +28,13 @@ std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
  * to also change the corresponding functions in `utils.h`.
  */
 std::set<std::string> get_applicants(std::string filename) {
-  // STUDENT TODO: Implement this function.
+  std::ifstream ifs(filename);
+  std::set<std::string> applicants;
+  std::string s;
+  while(getline(ifs, s)) {
+    applicants.insert(s);
+  }
+  return applicants;
 }
 
 /**
@@ -41,6 +47,19 @@ std::set<std::string> get_applicants(std::string filename) {
  */
 std::queue<const std::string*> find_matches(std::string name, std::set<std::string>& students) {
   // STUDENT TODO: Implement this function.
+  std::queue<const std::string*> res;
+  size_t space_pos = name.find(' ');
+  char first_init = name[0];
+  char last_init = name[space_pos + 1];
+  for(const auto& cur_name : students) {
+    size_t cur_pos = cur_name.find(' ');
+    char cur_first_init = cur_name[0];
+    char cur_last_init = cur_name[cur_pos + 1];
+    if(cur_first_init == first_init && cur_last_init == last_init) {
+      res.push(&cur_name);
+    }
+  }
+  return res;
 }
 
 /**
@@ -55,6 +74,12 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
  */
 std::string get_match(std::queue<const std::string*>& matches) {
   // STUDENT TODO: Implement this function.
+  const std::string* res;
+  while(!matches.empty()) {
+    res = matches.front();
+    matches.pop();
+  }
+  return *res;
 }
 
 /* #### Please don't remove this line! #### */
