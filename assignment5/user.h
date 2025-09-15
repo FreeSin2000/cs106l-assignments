@@ -10,6 +10,11 @@ class User
 {
 public:
   User(const std::string& name);
+  ~User();
+  User(const User& user);
+  User& operator=(const User& user);
+  User(User&& user) = delete;
+  User& operator=(User&& user) = delete;
   void add_friend(const std::string& name);
   std::string get_name() const;
   size_t size() const;
@@ -19,7 +24,9 @@ public:
    * STUDENT TODO:
    * Your custom operators and special member functions will go here!
    */
-
+  User& operator+=(User& rhs);
+  bool operator<(const User& rhs) const;
+  friend std::ostream& operator << (std::ostream & lhs, const User & rhs);
 private:
   std::string _name;
   std::string* _friends;
